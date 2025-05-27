@@ -6,15 +6,22 @@ const initialGameBoard = [
   [null, null, null],
 ];
 
-const GameBoard = () => {
-    const [gameBoard, setGameBoard] = useState(initialGameBoard);
+const GameBoard = ({gameTurns, onSelectSquare, activatePlayerSymbol}) => {
+    // const [gameBoard, setGameBoard] = useState(initialGameBoard);
+    let gameBoard = initialGameBoard;
+    for (let i = 0; i < gameTurns.length; i++) {
+        const { square, player } = gameTurns[i];
+        const { row, col } = square;
+        gameBoard[row][col] = player;
+    }
     const handleClickBoard = (rowIndex, colIndex) => {
-        setGameBoard((prevBoard) => {
-            const newBoard = [...prevBoard.map((row) => [...row])]; // Deep copy of the board
-            console.log(newBoard)
-            newBoard[rowIndex][colIndex] = 'X'; // Example: Set the clicked cell to 'X'
-            return newBoard;
-        })
+        // setGameBoard((prevBoard) => {
+        //     const newBoard = [...prevBoard.map((row) => [...row])]; // Deep copy of the board
+        //     console.log(newBoard)
+        //     newBoard[rowIndex][colIndex] = activatePlayerSymbol; // Example: Set the clicked cell to 'X'
+        //     return newBoard;
+        // })
+        onSelectSquare(rowIndex, colIndex);
     }
   return (
     <ol id="game-board">
