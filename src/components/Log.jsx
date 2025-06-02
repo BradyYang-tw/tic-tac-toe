@@ -1,9 +1,8 @@
-const Log = ()=>{
+const Log = ({turns})=>{
     return (
-        <div className="log">
-        <h2>Log</h2>
-        <p>This is the log component.</p>
-        </div>
+        <ol id='log'>
+            {turns.map((turn) => <li key={`${turn.square.row}${turn.square.col}`}>{turn.player} selected {turn.square.row},{turn.square.col}</li>)}
+        </ol>
     );
 }
 export default Log;

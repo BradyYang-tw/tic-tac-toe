@@ -32,7 +32,7 @@ const GameBoard = ({gameTurns, onSelectSquare, activatePlayerSymbol}) => {
               {row.map((col, colIndex) => {
                 return (
                   <li key={colIndex}>
-                    <button onClick={()=>handleClickBoard(rowIndex, colIndex)}>{col}</button>
+                    <button disabled={col!==null} onClick={()=>handleClickBoard(rowIndex, colIndex) }>{col}</button>
                   </li>
                 );
               })}
