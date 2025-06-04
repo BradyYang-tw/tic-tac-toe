@@ -2,13 +2,15 @@ import { useState } from "react";
 import Player from "./components/Player";
 import GameBoard from "./components/GameBoard";
 import Log from "./components/Log";
+import GameOver from "./components/GameOver";
 import { WINNING_COMBINATIONS } from "./winning_combination";
 
 function App() {
   let winner;
   const [gameTurns, setGameTurns] = useState([]);
   const [activatePlayer, setActivatePlayer] = useState("X");
-  console.log("gameTurns", gameTurns);
+  
+  // 根據gameTunner判斷winner
   for (let i = 0; i < gameTurns.length; i++) {
     const { square, player } = gameTurns[i];
     const { row, col } = square;
@@ -17,11 +19,11 @@ function App() {
     if (
       WINNING_COMBINATIONS.some(
         (combination) => {
-          console.log("combination", combination);
+          // console.log("combination", combination);
           return combination.every((pos) => {
-            console.log("pos", pos);
+            // console.log("pos", pos);
             return gameTurns.some((turn) => {
-              console.log("turn", turn);
+              // console.log("turn", turn);
               return turn.square.row == pos.row && turn.square.col == pos.column && turn.player === player;
             });
           });
@@ -34,6 +36,9 @@ function App() {
       break;
     }
   }
+
+  // 根據gameTurns判斷是否平手
+  const hasDraw = gameTurns.length === 9 && !winner;
 
   const handleSelectSquare = (rowIndex, colIndex) => {
     setActivatePlayer((prevPlayer) => (prevPlayer === "X" ? "O" : "X"));
@@ -63,7 +68,7 @@ function App() {
             isActivate={activatePlayer === "O"}
           ></Player>
         </ol>
-        {winner && <p>You Win {winner}</p>}
+        {(winner || hasDraw )&& <GameOver winner={winner} setGameTurns={setGameTurns}></GameOver>}
         <GameBoard
           gameTurns={gameTurns}
           onSelectSquare={handleSelectSquare}

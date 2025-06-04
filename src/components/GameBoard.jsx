@@ -8,7 +8,7 @@ const initialGameBoard = [
 
 const GameBoard = ({gameTurns, onSelectSquare, activatePlayerSymbol}) => {
     // const [gameBoard, setGameBoard] = useState(initialGameBoard);
-    let gameBoard = initialGameBoard;
+    let gameBoard = [...initialGameBoard.map((row) => [...row])]; // Deep copy of the initial game board
     for (let i = 0; i < gameTurns.length; i++) {
         const { square, player } = gameTurns[i];
         const { row, col } = square;
