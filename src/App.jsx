@@ -9,6 +9,10 @@ function App() {
   let winner;
   const [gameTurns, setGameTurns] = useState([]);
   const [activatePlayer, setActivatePlayer] = useState("X");
+  const [players, setPlayers] = useState({
+    X: "Player 1",
+    O: "Player 2",
+  })
   
   // 根據gameTunner判斷winner
   for (let i = 0; i < gameTurns.length; i++) {
@@ -32,7 +36,7 @@ function App() {
       )
     ) {
       console.log(`Player ${player} wins!`);
-      winner = player;
+      winner = players[player];
       break;
     }
   }
@@ -53,6 +57,16 @@ function App() {
       ];
     });
   };
+
+  function handlePlyaers(symbol, name){
+    setPlayers((pre)=>{
+      return {...pre,
+        [symbol]: name
+      }
+    })
+
+  }
+
   return (
     <main>
       <div id="game-container">
@@ -61,11 +75,13 @@ function App() {
             name={"Player 1"}
             symbol={"X"}
             isActivate={activatePlayer === "X"}
+            onChangePlayer={handlePlyaers}
           ></Player>
           <Player
             name={"Player 2"}
             symbol={"O"}
             isActivate={activatePlayer === "O"}
+            onChangePlayer={handlePlyaers}
           ></Player>
         </ol>
         {(winner || hasDraw )&& <GameOver winner={winner} setGameTurns={setGameTurns}></GameOver>}

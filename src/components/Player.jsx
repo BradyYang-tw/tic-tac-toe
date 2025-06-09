@@ -1,15 +1,20 @@
 import { useState } from "react";
-const Player = ({ name, symbol , isActivate}) => {
+const Player = ({ name, symbol , isActivate, onChangePlayer}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(name);
 
   function handleEdit(){
     setIsEditing((editing)=> !editing);
+    if (isEditing) {
+      onChangePlayer(symbol, editedName);
+    }
   }
 
   function handleChange(event){
     setEditedName(event.target.value);
   }
+
+  
   return (
     <div >
         <span className="player">
